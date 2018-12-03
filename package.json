@@ -1,0 +1,32 @@
+{
+  "name": "game-log-front-end",
+  "version": "1.0.0",
+  "description": "Front end for Galvanize Game Gallery Site",
+  "main": "index.js",
+  "scripts": {
+    "build": "browserify main.js -o bundle.js",
+    "watch": "watchify -d main.js -o bundle.js",
+    "dev-server": "live-server .",
+    "dev": "run-all \"npm run watch\" \"npm run dev-server\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Galvanize-Game-Gallery/game-log-front-end.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Galvanize-Game-Gallery/game-log-front-end/issues"
+  },
+  "homepage": "https://github.com/Galvanize-Game-Gallery/game-log-front-end#readme",
+  "dependencies": {
+    "axios": "^0.18.0"
+  },
+  "devDependencies": {
+    "browserify": "^16.2.3",
+    "live-server": "^1.2.1",
+    "run-all": "^1.0.1",
+    "watchify": "^3.11.0"
+  }
+}
