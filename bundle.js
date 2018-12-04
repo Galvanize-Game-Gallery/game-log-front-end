@@ -63,10 +63,9 @@ window.addEventListener('DOMContentLoaded', () => {
 
         localStorage.setItem('token', response.data.token)
         window.location = 'dashboard.html'
-        console.log('this is the then')
         })
-        .catch(function(error){
-            console.log('this is the catch')
+        .catch(() => {
+            alert('Login failed')
             throw {error: {status: 400, message: `Authentication failed`}}
         })
 
@@ -81,26 +80,15 @@ window.addEventListener('DOMContentLoaded', () => {
         let fname = document.getElementById('fname-create').value
         let lname = document.getElementById('lname-create').value
         let password = document.getElementById('password-create').value
-        console.log(username, fname, lname, password)
 
         axios.post(`http://localhost:3000/users`, { "username": username, "password": password, "fname": fname, "lname": lname } )
             .then(response => { 
-                alert('user created: ' + response.data)
+                alert('user created: ' + response.data.username)
             })
             .catch(() => {
                 throw {error: {status: 400, message: "Could not create user"}}
             })
-
-
     })
-
-
-
-
-
-
-
-
 
 })
 
