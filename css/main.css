@@ -16,7 +16,7 @@
 
   .row.tab {
       border: 1px solid black;
-      max-width: 95%;
+      /* max-width: 95%; */
   }
 
   .row.tab.game {
@@ -27,4 +27,9 @@
   .row.tab.game img {
       max-width: 90px;
       max-height: 90px; 
+  }
+
+  span.alert.game {
+      width: 40%;
+      font-size: 1em;;
   }

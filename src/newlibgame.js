@@ -4,7 +4,7 @@ function addEventListeners(){
 
     document.getElementById('searchSub').addEventListener('click', function(e){
         e.preventDefault()
-        let alert =  document.querySelector('.alert')
+        let alert =  document.querySelector('.alert.search')
         if(!alert.classList.contains('hide-confirm')) alert.classList.add('hide-confirm')
         let searchBox = document.getElementById('searchText')
             if(!searchBox.value){
@@ -31,17 +31,21 @@ function render(searchArray){
     }
 
     let table = document.createElement('table')
-    table.className='container col-md-6 col-sm-6'
+    table.className='container'
     let hrow = document.createElement('tr')
     hrow.className='row tab'
         let hrowCA = document.createElement('th')
         hrowCA.className='col-md-4 col-sm-4'
         hrowCA.innerText = 'Cover Art'
-        let hrowtitle = document.createElement('th')
-        hrowtitle.className='col-md-8 col-sm-8'
+    let hrowtitle = document.createElement('th')
+        hrowtitle.className='col-md-6 col-sm-6'
         hrowtitle.innerText = 'Game Title'
+    let addToLib = document.createElement('th')
+        addToLib.className='col-md-2 col-sm-2'
+        addToLib.innerText = 'Add Game'
     hrow.appendChild(hrowCA)
     hrow.appendChild(hrowtitle)
+    hrow.appendChild(addToLib)
     table.appendChild(hrow)
 
     searchArray.forEach(element => {
@@ -56,9 +60,33 @@ function render(searchArray){
         cover.className='col-md-4 col-sm-4'
         let title = document.createElement('td')
             title.innerText = element.name
-            title.className='col-md-8 col-sm-8'
+            title.className='col-md-6 col-sm-6'
+        let btnDiv = document.createElement('td')
+            btnDiv.className = 'col-md-2 col-sm-2'
+        let msg = document.createElement('span')
+        let addBtn = document.createElement('button')
+            addBtn.innerText = 'Add To Library'
+            addBtn.className = 'btn btn-info'
+            addBtn.addEventListener('click', function(e){
+                e.preventDefault()
+                return request(`/games/id/${element.id}`, 'post')
+                .then(result => {
+                    msg.innerText = 'Added!'
+                    msg.className = 'alert alert-success game'
+                })
+                .catch(error => {
+                    msg.innerText = 'Game Exists!'
+                    msg.className = 'alert alert-danger game'
+                })
+            })
+        
         row.appendChild(cover)
         row.appendChild(title)
+        btnDiv.appendChild(addBtn)
+        btnDiv.appendChild(document.createElement('br'))
+        btnDiv.appendChild(document.createElement('br'))
+        btnDiv.appendChild(msg)
+        row.appendChild(btnDiv)
         table.appendChild(row)
     })
     tbldiv.appendChild(table)
