@@ -24,15 +24,32 @@ else {
 
 },{}],3:[function(require,module,exports){
 // let axios = require('axios') - "require is not defined" - using cdn
+const createUserFormHTML = 
+`
 
+<form class='col-md-4 offset-md-4 form-signin'>
+    <h2>Create an account:</h2><br>
+    <label for="username-create">Username</label>
+    <input type="text" name="username-create" id="username-create" class="form-control" placeholder="User" required autofocus><br>
+   
+    <label for="fname-create">First name:</label>
+    <input type="text" name="fname-create" id="fname-create" class="form-control" placeholder="First" required autofocus><br>
+    <label for="lname-create">Last name:</label>
+    <input type="text" name="lname-create" id="lname-create" class="form-control" placeholder="Last" required autofocus><br>
+
+    <label for="password-create">Password</label>
+    <input type="text" name="password-create" id="password-create" class="form-control" placeholder="password" required> <br>
+    <input type="submit" id="submit-create" class="btn btn-primary">
+
+</form>
+
+`
 
 function request(path, method = 'get', body = null) {
 let bearerToken = ''
 const token = localStorage.getItem('token')
-console.log(token)
 if(token){
     bearerToken = `Bearer ${token}`
-    console.log('bearerToken: ' + bearerToken)
 }
 
 return axios(`http://localhost:3000${path}`, {
@@ -71,28 +88,43 @@ window.addEventListener('DOMContentLoaded', () => {
 
     })
 
+    let goToCreate = document.getElementById('go-to-create')
+    goToCreate.addEventListener('click', () => {
+        console.log('clicked')
+        let formSpace = document.getElementById('form-space')
+        formSpace.innerHTML = createUserFormHTML
 
-    let submitCreate = document.getElementById('submit-create')
+        let submitCreate = document.getElementById('submit-create')
 
-    submitCreate.addEventListener('click', (e) => {
-        e.preventDefault()
-        let username = document.getElementById('username-create').value
-        let fname = document.getElementById('fname-create').value
-        let lname = document.getElementById('lname-create').value
-        let password = document.getElementById('password-create').value
-
-        axios.post(`http://localhost:3000/users`, { "username": username, "password": password, "fname": fname, "lname": lname } )
-            .then(response => { 
-                alert('user created: ' + response.data.username)
-            })
-            .catch(() => {
-                throw {error: {status: 400, message: "Could not create user"}}
-            })
+        submitCreate.addEventListener('click', (e) => {
+            e.preventDefault()
+            let username = document.getElementById('username-create').value
+            let fname = document.getElementById('fname-create').value
+            let lname = document.getElementById('lname-create').value
+            let password = document.getElementById('password-create').value
+    
+            axios.post(`http://localhost:3000/users`, { "username": username, "password": password, "fname": fname, "lname": lname } )
+                .then(response => { 
+                    alert('user created!')
+                })
+                .catch(() => {
+                    throw {error: {status: 400, message: "Could not create user"}}
+                })
+        })
     })
+
+
+
+
+
+
 
 })
 
     
+
+
+
 
 
 

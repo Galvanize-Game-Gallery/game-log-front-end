@@ -1,0 +1,11 @@
+.welcome {
+    font-family: Audiowide !important;
+    /* font-family: 'Press Start 2P' !important; */
+    font-size: 130px;
+    text-align: center;
+   
+    margin-top: 1.5em;
+}
+.audiowide {
+    font-family: 'audiowide';
+}
