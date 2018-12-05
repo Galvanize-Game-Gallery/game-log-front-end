@@ -9,7 +9,7 @@ const publicGameRow = (id, coverArt, title, desc) => {
                 <div class="col-8">
                     <h2>${title}</h2>
                 </div>
-                <div class="col-4">
+                <div class="col-4" id="platform-area" data-id="${id}">
                     
                 </div>
                 <div class="row justify-content-center">
@@ -23,6 +23,35 @@ const publicGameRow = (id, coverArt, title, desc) => {
     `
 };
 
+const platformTagXbox = (name) => {
+    return `
+    <span class="badge badge-success">${name}</span>
+    `
+}
+
+const platformTagPS4 = (name) => {
+    return `
+    <span class="badge badge-primary">${name}</span>
+    `
+}
+
+const platformTagPC = (name) => {
+    return `
+    <span class="badge badge-dark">${name}</span>
+    `
+}
+
+const platformTagSwitch = (name) => {
+    return `
+    <span class="badge badge-danger">${name}</span>
+    `
+}
+
+
 module.exports = {
     publicGameRow,
+    platformTagXbox,
+    platformTagPS4,
+    platformTagPC,
+    platformTagSwitch
 }
