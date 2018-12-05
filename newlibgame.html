@@ -15,32 +15,22 @@
 </head>
 <body>
     <h1>Add a New Game to Our Library</h1>
-
+    <a href='./library.html'>&#8592; Back To Games Library</a>
     <div class='container'>
-        <div class='row libheader'>
+            <div class='row libheader'>
                 <div class="input-group col-md-6 col-sm-6"> 
                     <input type="text" class="form-control" id="searchText" name="x" placeholder="Search term...">
                     <span class="input-group-btn">
                         <button id="searchSub" class="btn btn-default" type="button"><i class="fas fa-search"></i></button>
                     </span>
                 </div> 
+                <div class="alert search alert-danger col-md-3 col-sm-3 hide-confirm">Search Cannot Be Empty!</div>
+            </div>
+
+
+        <div id='tbl'>
+
         </div>
-
-
-
-        <table id="gameSearchTable" style="width:80%">
-            <tr>
-                <th>Cover Art</th>
-                <th>Title</th>
-            </tr>
-        </table>
-
-
-
-        <form>
-            <input type="number">
-            <input type="submit" value="Submit">
-        </form>
     </div>
 
     
