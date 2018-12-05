@@ -1,8 +1,7 @@
 // let axios = require('axios') - "require is not defined" - using cdn
 
 
-function init () => {
-
+function init(){
 
     const createUserFormHTML = 
     `
@@ -137,8 +136,7 @@ function init () => {
         })
 
     })
-
-// }
+}
     
 
 

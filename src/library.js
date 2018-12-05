@@ -38,7 +38,17 @@ function init() {
     }
 
     generateGames(testArr);
+  
+  function addNewEvent(){
+
+    document.getElementById('add-new-game').addEventListener('click', function(e) {
+        e.preventDefault()
+        window.location = '/newlibgame.html'
+    })
+}
+
 }
 module.exports= {
     init,
 }
+
