@@ -1,12 +1,12 @@
 // let axios = require('axios') - "require is not defined" - using cdn
 
 
-function init(){
+function init() {
 
     const createUserFormHTML = 
     `
     <form class='form-signin'>
-        <h2 class='audiowide'>Create an account</h2>
+        <h2 class='audiowide'>Create your user:</h2>
         <label for="username-create">Username</label>
         <input type="text" name="username-create" id="username-create" class="form-control" placeholder="User" required autofocus><br>
     
@@ -22,9 +22,6 @@ function init(){
 
     </form>
     `
-
-
-
 
     function request(path, method = 'get', body = null) {
     let bearerToken = ''
@@ -43,8 +40,6 @@ function init(){
         data: body
     })
     }
-
-
 
     window.addEventListener('DOMContentLoaded', () => {    
 
@@ -122,7 +117,7 @@ function init(){
                                 
                         }
                         window.location = 'dashboard.html'
-                        alert('user created!')//can add custom dashboard welcome message here for new user if we want  
+                        
                     })
                     .catch(() => {
                         let alertBar = document.getElementById('alert-bar')  
@@ -138,8 +133,6 @@ function init(){
     })
 }
     
-
-
 
 module.exports = {init}
 
