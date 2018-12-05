@@ -31,7 +31,19 @@ function init() {
         document.querySelector(".main-body").innerHTML = appliedTemplates;
 
         for (let game of arr) {
-            
+            const platformList = [];
+            for (let system of game.platforms) {
+                if (system === 'Xbox One') {
+                    platformList.push(create.platformTagXbox(system))
+                } else if (system=== 'Playstation 4') {
+                    platformList.push(create.platformTagPS4(system))
+                } else if (system === 'PC') {
+                    platformList.push(create.platformTagPC(system))
+                } else { platformList.push(create.platformTagSwitch(system))}
+            }
+            console.log(platformList);
+            const platformsFormatted = platformList.join('\n');
+            document.querySelector(`#platform-area[data-id="${game.igdb_id}"`).innerHTML = platformsFormatted; 
         }
     }
 
