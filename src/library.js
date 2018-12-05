@@ -11,7 +11,6 @@ function init() {
         })
     };
 
-
     function generateGames(arr) {
 
         function formatCover(str) {
@@ -35,8 +34,6 @@ function init() {
             
         }
     }
-
-    
 
     function addNewEvent() {
 
