@@ -1,15 +1,81 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Galvanize Game Log User Dashboard</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-    <script defer src="bundle.js"></script>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Galvanize Game Log User Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+    crossorigin="anonymous">
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" type="text/css" media="screen" href="./css/main.css" />
+
+  <script defer src="bundle.js"></script>
 </head>
-<body>
-    <h1>Splendid login, welcome to your dashboard!</h1>
-</body>
+
+<body class='center  bg-dark'>
+    <body class='center  '>
+  <div class="containers ">
+    <div class="row columnH">
+      <!-- left side column
+      <div class="col-2 columnH borderS">
+        <div class="borderS">
+          User Info
+        </div>
+      </div> -->
+      <!-- first column -->
+      <div class="col-12 columnH borderS">
+        <!-- Nav for web pages -->
+          <nav class="nav">
+              <a class="nav-link active" href="#">Personal Library</a>
+              <a class="nav-link" href="#">Add to Library</a>
+              <a class="nav-link" href="#">Sing Out</a>
+            </nav>
+        <!-- Top Left  -->
+        <div class="row row25">
+          <div class="col-9 borderS columnH"> 
+              <h1 class='dashH1 text-primary'>Game Library </h1>
+
+          </div>
+          <!-- Top Right User Info -->
+          <div class="col-3 borderS columnH"> 
+          </div>
+        </div>
+        <!-- bottom row -->
+        <div class="row  row75 borderS">
+  
+          <!-- Left Library Column -->
+          <div class="col-9 borderS">
+            <!-- Bottom Panel Nav Bar -->
+              <nav>
+                  <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                    <a class="nav-item nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">Home</a>
+                    <a class="nav-item nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false">Profile</a>
+                    <a class="nav-item nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false">Contact</a>
+                  </div>
+                </nav>
+                <div class="tab-content" id="nav-tabContent">
+                  <div class="tab-pane fade" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
+                  <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
+                  <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
+                </div class='gameTable'>
+                <div>
+                </div>
+          </div>
+          <!-- Bottom Right Library Column -->
+          <div class="col-3 borderS">
+              <form class="form-inline my-2 my-lg-0 ">
+                  <input class="form-control mr-sm-3" type="search" placeholder="Search" aria-label="Search">
+                  <button class="btn btn-outline my-2 my-sm-0" type="submit">Search</button>
+                </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  </body> 
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </html>
