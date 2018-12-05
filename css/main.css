@@ -87,3 +87,27 @@ justify-content: center;
   margin: .5%;
   margin-top: 1%;
 }
+
+.hide-confirm{
+    visibility: hidden;
+  }
+
+  .row.tab {
+      border: 1px solid black;
+      /* max-width: 95%; */
+  }
+
+  .row.tab.game {
+      padding-top: .5em;
+      padding-bottom: .5em;
+  }
+
+  .row.tab.game img {
+      max-width: 90px;
+      max-height: 90px; 
+  }
+
+  span.alert.game {
+      width: 40%;
+      font-size: 1em;;
+  }
