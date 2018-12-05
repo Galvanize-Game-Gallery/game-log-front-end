@@ -3,7 +3,6 @@
 
 function init(){
 
-
     const createUserFormHTML = 
     `
     <form class='form-signin'>
@@ -137,8 +136,7 @@ function init(){
         })
 
     })
-
- }
+}
     
 
 
