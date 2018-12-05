@@ -1,3 +1,4 @@
+
 .public-game-rows {
     margin-top: 10px;
     padding: 5px;
@@ -5,4 +6,16 @@
 
 .public-game-rows-text {
     padding: 10px;
+}
+
+.welcome {
+    font-family: Audiowide !important;
+    /* font-family: 'Press Start 2P' !important; */
+    font-size: 130px;
+    text-align: center;
+   
+    margin-top: 1.5em;
+}
+.audiowide {
+    font-family: 'audiowide';
 }
