@@ -1,35 +1,50 @@
 const { request } = require('../utils')
 
 function addEventListeners(){
-    console.log('hello!')
+
     document.getElementById('searchSub').addEventListener('click', function(e){
-        console.log('hello!')
+        e.preventDefault()
+        let alert =  document.querySelector('.alert')
+        if(!alert.classList.contains('hide-confirm')) alert.classList.add('hide-confirm')
         let searchBox = document.getElementById('searchText')
-        searchIGDB(searchBox.value)
+            if(!searchBox.value){
+                alert.classList.remove('hide-confirm')
+            } 
+            else {
+                searchIGDB(searchBox.value)
+            }
     })
 }
 
 function searchIGDB(searchString){
-    request(`/games/${searchString}`, 'get')
+    return request(`/games/${searchString}`, 'get')
     .then(result => {
         console.log(result)
+        render(result)
     })
+}
 
 
-    // .then(result => {
-    //     document.querySelector('#newSuccess').classList.remove('hide-confirm')
-    //     setTimeout(() => {
-    //         document.querySelector('#newSuccess').classList.add('hide-confirm')
-    //         window.location = `/show.html?=${result.data[0].id}`
-    //     }, 1000);
-    // })
-    // .catch(error => {
-    //     if(error.response.status === 406) {alert("ERROR 406, Invalid Parameters: Ratings must be 1-5")}
-    //     else {
-    //         alert(error)
-    //         window.location = '/home.html'
-    //     }   
-    // })
+function render(searchArray){
+    let tbldiv = document.getElementById('tbl')
+    while (tbldiv.hasChildNodes()) {
+        tbldiv.removeChild(tbldiv.childNodes[0]);
+    }
+
+    let table = document.createElement('table')
+    let hrow = document.createElement('tr')
+        let hrowCA = document.createElement('th')
+        hrowCA.innerText = 'Cover Art'
+        let hrowtitle = document.createElement('th')
+        hrowtitle.innerText = 'Game Title'
+    hrow.appendChild(hrowCA)
+    hrow.appendChild(hrowtitle)
+    table.appendChild(hrow)
+    // searchArray.forEach(element => {
+        
+    // });
+
+    tbldiv.appendChild(table)
 }
 
 function init(){
