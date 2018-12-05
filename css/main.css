@@ -9,3 +9,7 @@
 .audiowide {
     font-family: 'audiowide';
 }
+
+.hide-confirm{
+    visibility: hidden;
+  }
