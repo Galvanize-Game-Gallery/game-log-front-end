@@ -1,35 +1,95 @@
 const { request } = require('../utils')
 
 function addEventListeners(){
-    console.log('hello!')
+
     document.getElementById('searchSub').addEventListener('click', function(e){
-        console.log('hello!')
+        e.preventDefault()
+        let alert =  document.querySelector('.alert.search')
+        if(!alert.classList.contains('hide-confirm')) alert.classList.add('hide-confirm')
         let searchBox = document.getElementById('searchText')
-        searchIGDB(searchBox.value)
+            if(!searchBox.value){
+                alert.classList.remove('hide-confirm')
+            } 
+            else {
+                searchIGDB(searchBox.value)
+            }
     })
 }
 
 function searchIGDB(searchString){
-    request(`/games/${searchString}`, 'get')
+    return request(`/games/${searchString}`, 'get')
     .then(result => {
-        console.log(result)
+        render(result.data)
     })
+}
 
 
-    // .then(result => {
-    //     document.querySelector('#newSuccess').classList.remove('hide-confirm')
-    //     setTimeout(() => {
-    //         document.querySelector('#newSuccess').classList.add('hide-confirm')
-    //         window.location = `/show.html?=${result.data[0].id}`
-    //     }, 1000);
-    // })
-    // .catch(error => {
-    //     if(error.response.status === 406) {alert("ERROR 406, Invalid Parameters: Ratings must be 1-5")}
-    //     else {
-    //         alert(error)
-    //         window.location = '/home.html'
-    //     }   
-    // })
+function render(searchArray){
+    let tbldiv = document.getElementById('tbl')
+    if(document.querySelector('table')) {
+        tbldiv.removeChild(document.querySelector('table'))
+    }
+
+    let table = document.createElement('table')
+    table.className='container'
+    let hrow = document.createElement('tr')
+    hrow.className='row tab'
+        let hrowCA = document.createElement('th')
+        hrowCA.className='col-md-4 col-sm-4'
+        hrowCA.innerText = 'Cover Art'
+    let hrowtitle = document.createElement('th')
+        hrowtitle.className='col-md-6 col-sm-6'
+        hrowtitle.innerText = 'Game Title'
+    let addToLib = document.createElement('th')
+        addToLib.className='col-md-2 col-sm-2'
+        addToLib.innerText = 'Add Game'
+    hrow.appendChild(hrowCA)
+    hrow.appendChild(hrowtitle)
+    hrow.appendChild(addToLib)
+    table.appendChild(hrow)
+
+    searchArray.forEach(element => {
+        let coverArt = (!element.cover || !element.cover.url) ? 'https://pbs.twimg.com/profile_images/999040468804550656/fz9_TwiQ_400x400.jpg' : `http:${element.cover.url}`
+        let row = document.createElement('tr')
+            row.className = 'row tab game'
+            row.id = element.id
+        let cover = document.createElement('td')
+        let ca = document.createElement('img')
+            ca.src = coverArt
+        cover.appendChild(ca)
+        cover.className='col-md-4 col-sm-4'
+        let title = document.createElement('td')
+            title.innerText = element.name
+            title.className='col-md-6 col-sm-6'
+        let btnDiv = document.createElement('td')
+            btnDiv.className = 'col-md-2 col-sm-2'
+        let msg = document.createElement('span')
+        let addBtn = document.createElement('button')
+            addBtn.innerText = 'Add To Library'
+            addBtn.className = 'btn btn-info'
+            addBtn.addEventListener('click', function(e){
+                e.preventDefault()
+                return request(`/games/id/${element.id}`, 'post')
+                .then(result => {
+                    msg.innerText = 'Added!'
+                    msg.className = 'alert alert-success game'
+                })
+                .catch(error => {
+                    msg.innerText = 'Game Exists!'
+                    msg.className = 'alert alert-danger game'
+                })
+            })
+        
+        row.appendChild(cover)
+        row.appendChild(title)
+        btnDiv.appendChild(addBtn)
+        btnDiv.appendChild(document.createElement('br'))
+        btnDiv.appendChild(document.createElement('br'))
+        btnDiv.appendChild(msg)
+        row.appendChild(btnDiv)
+        table.appendChild(row)
+    })
+    tbldiv.appendChild(table)
 }
 
 function init(){
