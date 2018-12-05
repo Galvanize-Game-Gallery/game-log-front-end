@@ -1,11 +1,38 @@
-.containers {
+.welcome {
+  font-family: Audiowide !important;
+  /* font-family: 'Press Start 2P' !important; */
+  font-size: 130px;
+  text-align: center;
  
+  margin-top: 1.5em;
+}
+.audiowide {
+  font-family: 'audiowide';
+}
+
+.dashH1 {
+  font-family: Audiowide !important;
+   /* font-family: 'Press Start 2P' !important; */
+  font-size: 130px;
+  text-align: center;
+  margin-top: 5%;
+}
+
+.gametable {
+
+}
+
+.containers {
   height: 1000px;
   width: 95%;
   border-width: 1px;
 }
 
-
+/* cant find out how to do top center */
+.centering { 
+display: flex;
+justify-content: center;
+}
 
 .innerbox {
   border-style: solid;
@@ -29,10 +56,10 @@
 }
 
 .row75 {
-  height: 70%
+  height: 65%
 }
 .row25 {
-  height: 30%
+  height: 35%
 }
 
 .margin {
