@@ -12,7 +12,6 @@ const pageInitialization = {
 }
 
 const path = window.location.pathname
- 
 if(pageInitialization.hasOwnProperty(path)) {
   pageInitialization[path]()
 }
