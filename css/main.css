@@ -8,6 +8,13 @@
     padding: 10px;
 }
 
+.cover-art {
+    border: 1px solid black;
+    display: block !important;
+    margin-right: auto !important;
+    margin-left: auto !important
+}
+
 .welcome {
     font-family: Audiowide !important;
     /* font-family: 'Press Start 2P' !important; */
