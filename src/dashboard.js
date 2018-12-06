@@ -78,16 +78,16 @@ function renderNavBar() {
     navBar.innerHTML = ''
     for (let platform of usersPlatforms) {
       if (usersPlatforms.indexOf(platform) === 0) {
-        navBar.innerHTML +=`<a class="nav-item nav-link btn active" id="${platform.name}-tab" data-toggle="tab" role="tab"
+        navBar.innerHTML +=`<a class="nav-item nav-link btn active bg-secondary text-light nav-tab" id="${platform.igdb_id}-tab" data-toggle="tab" role="tab"
                     aria-controls="nav-home" aria-selected="true">${platform.name}</a>`
       } else {
         navBar.innerHTML +=
-        `<a class="nav-item btn nav-link" id="${platform.name}-tab" data-toggle="tab"  role="tab"
+        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="${platform.igdb_id}-tab" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" aria-selected="false">${platform.name}</a>`
       }
     };
     navBar.innerHTML +=
-        `<a class="nav-item btn nav-link" id="new-platform-tab" data-toggle="tab"  role="tab"
+        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="new-platform-tab" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" data-toggle="modal" data-target="#add-platform-modal" aria-selected="false">Add a platform</a>`
     const add_modal = create.addPlatformModal();
     navBar.innerHTML += add_modal;

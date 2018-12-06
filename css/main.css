@@ -136,3 +136,12 @@ justify-content: center;
   .user-dash-info {
     margin-top: 10%;
   }
+
+  .nav-tab {
+    margin-right: 2px;
+  }
+
+  .tab-bar {
+    margin-bottom: 3px;
+    margin-top: 10px;
+  }
