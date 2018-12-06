@@ -51,23 +51,43 @@ const platformTagSwitch = (name) => {
     `
 }
 
+const addplatformAvailable = (id, name) => {
+    return `
+    <option id="${id}">${name}</option>
+    `
+}
+
+const addplatformOwned = (id, name) => {
+    return `
+    <option data-id="${id}" disabled>${name}: You Already Own One</option>
+    `
+}
+
+
 const addPlatformModal = () => {
     return `
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalCenterTitle">Modal title</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body platformList">
+        <div class="modal fade" id="add-platform-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalCenterTitle">Select a Platform to Add to Your Collection</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                            </button>
+                    </div>
+                    <div class="modal-body platformList">
+                            <form id="add-platform-to-user">
+                                <select class="form-control" id="platform-options">
+                                    <option>Select a Platform to Add</option>
 
+                                </select>  
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <input type="submit" class="btn btn-primary" id="ad-platform" value="ADD">
+                                </div>
+                            </form>
+                    </div>
                 </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
             </div>
         </div>
     </div>
@@ -82,7 +102,9 @@ module.exports = {
     platformTagPC,
     platformTagSwitch,
     addPlatformModal,
-    platformTagSwitch
+    platformTagSwitch,
+    addplatformAvailable,
+    addplatformOwned,
     // ,gameHeaders
 
 }
