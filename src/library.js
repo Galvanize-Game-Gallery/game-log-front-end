@@ -1,4 +1,25 @@
 function init() {
+
+  let userID = function getUserID(){
+    let linkID = window.location.search
+    let userID = linkID.slice(4)
+    console.log('user id', userID)
+    return userID
+  }
+  userID()
+
+  function dynamicLink(link, nav) {
+    let linkID = window.location.search
+    let userID = linkID.slice(4)
+    dynamicLink = link + linkID
+    nav.setAttribute('href', dynamicLink)  
+  }
+
+  let navLibrary = document.querySelector('#navDashboard')
+  let userLibraryLink = 'dashboard.html'
+  dynamicLink(userLibraryLink, navLibrary)
+
+
     const create = require('./templates');
     const game = "https://lit-escarpment-87610.herokuapp.com/game";
     const axios = require('axios');
