@@ -22,7 +22,7 @@ function init() {
 ] }
 
 
-  let xbox = {name: "Xbox One", games:  [{title: "Xbox Cowboy Simulator 2007", notes: `someone poisoned the waterin hole!`, desc: `Developed by the creators of Grand Theft Auto V and
+  let xbox = {name: "Xbox One", games:  [{title: "Microsoft Cowboy Simulator 2007", notes: `someone poisoned the waterin hole!`, desc: `Developed by the creators of Grand Theft Auto V and
   Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
   unforgiving heartland. The game's vast and atmospheric world will also provide the
   foundation for a brand new online multiplayer experience.`, rating: 4, cover_url: 'https://static1.funidelia.com/54007-f4_large/mans-cowboy-costume-with-inflatable-horse.jpg'},
@@ -73,9 +73,8 @@ foundation for a brand new online multiplayer experience.`, rating: 1, cover_url
 
 
     
-  
-
 //populate navbar
+function renderNavBar() {
     let navBar = document.getElementById('nav-tab')
     navBar.innerHTML = ''
     for (let platform of userPlatforms) {
@@ -87,9 +86,13 @@ foundation for a brand new online multiplayer experience.`, rating: 1, cover_url
         `<a class="nav-item btn nav-link" id="${platform.name}-tab" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" aria-selected="false">${platform.name}</a>`
       }
-    }
+    } console.log('now for the platform thing')
+    navBar.innerHTML +=
+        `<a class="nav-item btn nav-link" id="new-platform-tab" data-toggle="tab"  role="tab"
+        aria-controls="nav-profile" aria-selected="false">Add a platform</a>`
+}
 
-
+renderNavBar()
 
 
 
