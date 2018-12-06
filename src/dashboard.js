@@ -114,7 +114,6 @@ function renderNavBar() {
       event.preventDefault();
       let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
       let selectedStr = selectedOption[0].id;
-      console.log(typeof parseInt(selectedStr));
       axios.post(userAPI + `/${userId}/platforms`, {
         user_id: userId,
         platform_id: parseInt(selectedStr),
