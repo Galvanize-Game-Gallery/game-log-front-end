@@ -120,7 +120,7 @@ function renderNavBar() {
       })
       .then(function(){
         console.log('Platform Added');
-        init();
+        renderAccordion(selectedStr);
       })
     })
 }
