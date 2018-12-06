@@ -35,7 +35,7 @@ function render(searchArray){
     let hrow = document.createElement('tr')
     hrow.className='row tab border'
         let hrowCA = document.createElement('th')
-        hrowCA.className='col-md-4 col-sm-4'
+        hrowCA.className='col-md-3 col-sm-3'
         hrowCA.innerText = 'Cover Art'
     let hrowtitle = document.createElement('th')
         hrowtitle.className='col-md-6 col-sm-6'
@@ -57,16 +57,17 @@ function render(searchArray){
         let ca = document.createElement('img')
             ca.src = coverArt
         cover.appendChild(ca)
-        cover.className='col-md-4 col-sm-4'
+        cover.className='col-md-3 col-sm-3'
         let title = document.createElement('td')
-            title.innerText = element.name
-            title.className='col-md-6 col-sm-6'
+            title.className='col-md-6 col-sm-6 align-self-center'
+        let titlesp = document.createElement('span')    
+            titlesp.innerText = element.name
         let btnDiv = document.createElement('td')
             btnDiv.className = 'col-md-2 col-sm-2'
         let msg = document.createElement('span')
         let addBtn = document.createElement('button')
             addBtn.innerText = 'Add To Library'
-            addBtn.className = 'btn btn-info'
+            addBtn.className = 'btn btn-primary'
             addBtn.addEventListener('click', function(e){
                 e.preventDefault()
                 return request(`/games/id/${element.id}`, 'post')
@@ -80,6 +81,7 @@ function render(searchArray){
                 })
             })
         
+        title.appendChild(titlesp)
         row.appendChild(cover)
         row.appendChild(title)
         btnDiv.appendChild(addBtn)

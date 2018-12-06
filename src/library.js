@@ -14,8 +14,13 @@ function init() {
     function generateGames(arr) {
 
         function formatCover(str) {
-            let newStr = str.slice(2);
-            return `http://${newStr}`;
+            if(str[0] === '/'){
+             let newStr = str.slice(2);
+             return `http://${newStr}`;
+            }
+            else {
+                return str
+            }
         };
 
         function formatDesc(str) {
