@@ -2,7 +2,12 @@
 .public-game-rows {
     margin-top: 10px;
     padding: 5px;
+    background-color: #FFFFFF;
 } 
+
+div.container.con {
+  background-color: #FDF7F7;
+}
 
 .public-game-rows-text {
     padding: 10px;
@@ -44,10 +49,6 @@
   font-size: 130px;
   margin-top: 15px;
   margin-left: 15%
-}
-
-.gametable {
-
 }
 
 .containers {
@@ -103,33 +104,30 @@ justify-content: center;
     visibility: hidden;
   }
 
-  th {
-    color: white;
-  }
   
   .row.tab {
-      color: white;
+      background-color: #FDF7F7;
   }
 
   .row.tab.game {
       padding-top: .5em;
       padding-bottom: .5em;
-      color: white;
+      background-color: #FFFFFF;
   }
-
+  .row.tab.game span {
+    font-size: 2em;
+    font-weight: 500;
+  }
   .row.tab.game img {
       max-width: 90px;
       max-height: 90px; 
   }
 
-  span.alert.game {
+  .row.tab.game span.alert.game {
       width: 40%;
       font-size: 1em;;
   }
 
-  .row.flex {
-      justify-content: space-between;
-  }
   .dashboard-image {
     width: 100%;
     height: 100%;
