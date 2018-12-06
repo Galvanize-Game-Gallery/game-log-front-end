@@ -103,15 +103,10 @@ justify-content: center;
     visibility: hidden;
   }
 
-  /* .row.tab {
-      border: 1px solid black;
-      /* max-width: 95%; */
-  } */
-
-  /* p.public-game-rows-text, .public-game-rows h2{
-      color: white !important;
-  } */
-
+  th {
+    color: white;
+  }
+  
   .row.tab {
       color: white;
   }
