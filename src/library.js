@@ -21,7 +21,7 @@ function init() {
 
 
     const create = require('./templates');
-    const game = "http://localhost:3000/game";
+    const game = "https://lit-escarpment-87610.herokuapp.com/game";
     const axios = require('axios');
 
     function getlibrary() {

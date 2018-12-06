@@ -22,9 +22,13 @@ function init() {
   const str = window.location.search;
   const userId = str.substring(str.indexOf('=')+1);
   const axios = require('axios');
-  const userAPI = 'http://localhost:3000/user';
+  const {request} = require('../utils');
 
 
+  request(`/user/${userId}/platforms`,'get').then(function(result){
+    console.log(result);
+  })
+  
 //dummy data
   
   let userPlatforms = [{id: 49, name: 'Xbox One'}, {id: 50, name: "Playstation 4"}, {id: 52, name: "Nintendo Switch"}, {id: 51, name: "PC"}]
@@ -142,10 +146,10 @@ function renderNavBar() {
       event.preventDefault();
       let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
       let selectedStr = selectedOption[0].id;
-      axios.post(userAPI + `/${userId}/platforms`, {
+      request(`/user/${userId}/platforms`,'post',{
         user_id: userId,
         platform_id: parseInt(selectedStr),
-      })
+      }) 
       .then(function(){
         console.log('Platform Added');
         renderAccordion(selectedStr);
@@ -204,8 +208,6 @@ renderAccordion(xbox)
 
 
     document.addEventListener('click', (e) => {
-      // e.preventDefault()
-      console.log('clicked!')
       if (e.target.matches('.nav-item')) {
         if (e.target.innerHTML === 'Xbox One') {
           renderAccordion(xbox)
