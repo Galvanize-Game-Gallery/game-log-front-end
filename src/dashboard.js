@@ -1,10 +1,38 @@
+function request(path, method = 'get', body = null) {
+  let bearerToken = ''
+  const token = localStorage.getItem('token')
+  if (token) {
+    bearerToken = `Bearer ${token}`
+  }
+
+  return axios(`http://localhost:3000${path}`, {
+    method: method,
+    headers: {
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',
+      'Authorization': bearerToken
+    },
+    data: body
+  })
+}
+
 
 function init() {
+
 
 
 //dummy data
   
   let userPlatforms = [{id: 49, name: 'Xbox One'}, {id: 50, name: "Playstation 4"}, {id: 52, name: "Nintendo Switch"}, {id: 51, name: "PC"}]
+
+  request('/auth/token')
+  .then(response => {
+    const id = response.data.id
+    return request(`/user/${id}/platforms`)
+  })
+  .then(function(response){
+    console.log(response.data)
+  })
 
 
   let ps4 ={name: "Playstation 4", games: [{title: "Red Dead Redemption 2", notes: `there's a snake in my boot!`, desc: `Developed by the creators of Grand Theft Auto V and
@@ -167,35 +195,44 @@ renderAccordion(xbox)
 
 
 
+  //dashboard query selectors
+  let dashSwitch = document.querySelector('#dashPC')
+  let dashPC = document.querySelector('#dashSwitch')
+  let dashPlay = document.querySelector('#dashPlay')
+  let dashAdd = document.querySelector('#dashXbox')
+  let dashXbox = document.querySelector('#dashAdd')
+  let headingUser = document.querySelector('h4')
+  let headingName = document.querySelector('h5')
+  let userName = 'dynamically set Name'
+  let fullName = 'pull full name'
+
+  
+
+  
 
 
-
-
-
-
-
-
-
-
-
-
-      //dashboard query selectors
-    let dashSwitch = document.querySelector('#dashPC')
-    let dashPC = document.querySelector('#dashSwitch')
-    let dashPlay = document.querySelector('#dashPlay')
-    let dashAdd = document.querySelector('#dashXbox')
-    let dashXbox = document.querySelector('#dashAdd')
-    let headingUser = document.querySelector('h4')
-    let headingName = document.querySelector('h5')
-    let userName = 'dynamically set Name'
-    let fullName = 'pull full name'
-    //Fill in user info
-
-    headingUser.innerHTML = userName
-    headingName.innerText = fullName
-
-
-
+  //place link variables for page here
+  // dynamic link function
+  function dynamicLink(link, nav) {
+    let linkID = window.location.search
+    let userID = linkID.slice(4)
+    dynamicLink = link + linkID
+    nav.setAttribute('href', dynamicLink)  
+  }
+  
+  // dynamic link invoke here. 
+  let navLibrary = document.querySelector('#navlibrary')
+  let userLibraryLink = 'library.html'
+  dynamicLink(userLibraryLink, navLibrary)
+  
+  
+  
+  
+  headingUser.innerHTML = userName
+  headingName.innerText = fullName
+  
+  
+  
 
 
 
