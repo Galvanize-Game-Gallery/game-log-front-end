@@ -15,6 +15,17 @@
     margin-left: auto !important
 }
 
+.header {
+    font-family: Audiowide !important;
+    margin-top: 1.5em;
+    margin-left: 1.5em;
+}
+
+.fontlink {
+    font-family: Audiowide !important;
+    margin-left: 2.5em;
+}
+
 .welcome {
   font-family: Audiowide !important;
   /* font-family: 'Press Start 2P' !important; */
@@ -92,14 +103,23 @@ justify-content: center;
     visibility: hidden;
   }
 
-  .row.tab {
+  /* .row.tab {
       border: 1px solid black;
       /* max-width: 95%; */
+  } */
+
+  /* p.public-game-rows-text, .public-game-rows h2{
+      color: white !important;
+  } */
+
+  .row.tab {
+      color: white;
   }
 
   .row.tab.game {
       padding-top: .5em;
       padding-bottom: .5em;
+      color: white;
   }
 
   .row.tab.game img {
@@ -110,4 +130,8 @@ justify-content: center;
   span.alert.game {
       width: 40%;
       font-size: 1em;;
+  }
+
+  .row.flex {
+      justify-content: space-between;
   }
