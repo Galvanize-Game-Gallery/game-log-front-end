@@ -15,6 +15,17 @@
     margin-left: auto !important
 }
 
+.header {
+    font-family: Audiowide !important;
+    margin-top: 1.5em;
+    margin-left: 1.5em;
+}
+
+.fontlink {
+    font-family: Audiowide !important;
+    margin-left: 2.5em;
+}
+
 .welcome {
   font-family: 'audiowide' !important;
   /* font-family: 'Press Start 2P' !important; */
@@ -92,14 +103,18 @@ justify-content: center;
     visibility: hidden;
   }
 
+  th {
+    color: white;
+  }
+  
   .row.tab {
-      border: 1px solid black;
-      /* max-width: 95%; */
+      color: white;
   }
 
   .row.tab.game {
       padding-top: .5em;
       padding-bottom: .5em;
+      color: white;
   }
 
   .row.tab.game img {
@@ -112,6 +127,9 @@ justify-content: center;
       font-size: 1em;;
   }
 
+  .row.flex {
+      justify-content: space-between;
+  }
   .dashboard-image {
     width: 100%;
     height: 100%;

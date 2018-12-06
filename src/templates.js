@@ -6,7 +6,7 @@ const publicGameRow = (id, coverArt, title, desc) => {
         </div>
         <div class="col-10">
             <div class="row justify-content-start">
-                <div class="col-8">
+                <div class="col-8" style="color: white;">
                     <h2>${title}</h2>
                 </div>
                 <div class="col-4" id="platform-area" data-id="${id}">
@@ -14,7 +14,7 @@ const publicGameRow = (id, coverArt, title, desc) => {
                 </div>
                 <div class="row justify-content-center">
                     <div class="col">
-                        <p class="public-game-rows-text">${desc}</p>
+                        <p class="public-game-rows-text" style="color: white;">${desc}</p>
                     </div>
                 </div>
             </div>
@@ -22,6 +22,10 @@ const publicGameRow = (id, coverArt, title, desc) => {
     </div>
     `
 };
+
+// const gameHeaders =()=> {
+//     return `<div class="row justify-content-start item-rows border public-game-rows">The Games</div>`
+// }
 
 const platformTagXbox = (name) => {
     return `
@@ -54,4 +58,5 @@ module.exports = {
     platformTagPS4,
     platformTagPC,
     platformTagSwitch
+    // ,gameHeaders
 }

@@ -33,7 +33,7 @@ function render(searchArray){
     let table = document.createElement('table')
     table.className='container'
     let hrow = document.createElement('tr')
-    hrow.className='row tab'
+    hrow.className='row tab border'
         let hrowCA = document.createElement('th')
         hrowCA.className='col-md-4 col-sm-4'
         hrowCA.innerText = 'Cover Art'
@@ -51,7 +51,7 @@ function render(searchArray){
     searchArray.forEach(element => {
         let coverArt = (!element.cover || !element.cover.url) ? 'https://pbs.twimg.com/profile_images/999040468804550656/fz9_TwiQ_400x400.jpg' : `http:${element.cover.url}`
         let row = document.createElement('tr')
-            row.className = 'row tab game'
+            row.className = 'row tab game border'
             row.id = element.id
         let cover = document.createElement('td')
         let ca = document.createElement('img')
