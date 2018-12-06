@@ -1,12 +1,13 @@
 // let axios = require('axios') - "require is not defined" - using cdn
 
 
-function init(){
+function init ()  {
+
 
     const createUserFormHTML = 
     `
     <form class='form-signin'>
-        <h2 class='audiowide'>Create an account</h2>
+        <h2 class='audiowide'>Create your user:</h2>
         <label for="username-create">Username</label>
         <input type="text" name="username-create" id="username-create" class="form-control" placeholder="User" required autofocus><br>
     
@@ -16,15 +17,12 @@ function init(){
         <input type="text" name="lname-create" id="lname-create" class="form-control" placeholder="Last" required><br>
 
         <label for="password-create">Password</label>
-        <input type="text" name="password-create" id="password-create" class="form-control" placeholder="password" required> <br>
+        <input type="text" name="password-create" id="password-create" class="form-control" placeholder="Password" required> <br>
         <input type='submit' id="submit-create" class="btn btn-primary" value='Start my log!'>
         <button class='btn btn-primary' id='back-to-sign-in'>Back to sign-in</button>
 
     </form>
     `
-
-
-
 
     function request(path, method = 'get', body = null) {
     let bearerToken = ''
@@ -43,8 +41,6 @@ function init(){
         data: body
     })
     }
-
-
 
     window.addEventListener('DOMContentLoaded', () => {    
 
@@ -66,9 +62,16 @@ function init(){
                     return
             }
             request('/auth/token', 'post', { username , password })
-            .then(function(response){
+            .then(response => {
                 localStorage.setItem('token', response.data.token)
                 window.location = 'dashboard.html'
+                // if (response.data.error) {
+                //     let alertBar = document.getElementById('alert-bar')  
+                //     alertBar.innerHTML = ` 
+                //         <div class="alert alert-danger" role="alert">
+                //         Incorrect username or password.
+                //         </div>`
+                // }
             })
             .catch(() => {
                 let alertBar = document.getElementById('alert-bar')  
@@ -76,7 +79,7 @@ function init(){
                     <div class="alert alert-danger" role="alert">
                     Incorrect username or password.
                     </div>`
-                throw {error: {status: 400, message: `Authentication failed`}}
+                
                 
             })
 
@@ -122,7 +125,7 @@ function init(){
                                 
                         }
                         window.location = 'dashboard.html'
-                        alert('user created!')//can add custom dashboard welcome message here for new user if we want  
+                       //can add custom dashboard welcome message here for new user if we want  
                     })
                     .catch(() => {
                         let alertBar = document.getElementById('alert-bar')  
