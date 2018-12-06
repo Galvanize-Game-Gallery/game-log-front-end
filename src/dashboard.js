@@ -1,11 +1,15 @@
 
 function init() {
-
+  const create = require('./templates');
+  const str = window.location.search;
+  const userId = str.substring(str.indexOf('=')+1);
+  const axios = require('axios');
+  const userAPI = 'http://localhost:3000/user';
 
 //dummy data
   
-  let userPlatforms = [{id: 49, name: 'Xbox One'}, {id: 50, name: "Playstation 4"}, {id: 52, name: "Nintendo Switch"}, {id: 51, name: "PC"}]
-
+  let usersPlatforms = [{igdb_id: 49, name: 'Xbox One'}, {igdb_id: 52, name: "Nintendo Switch"}, {igdb_id: 51, name: "PC"}];
+  const allPlatforms = [{igdb_id: 49, name: 'Xbox One'}, {igdb_id: 50, name: "Playstation 4"}, {igdb_id: 52, name: "Nintendo Switch"}, {igdb_id: 51, name: "PC"}];
 
   let ps4 ={name: "Playstation 4", games: [{title: "Red Dead Redemption 2", notes: `there's a snake in my boot!`, desc: `Developed by the creators of Grand Theft Auto V and
   Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
@@ -65,20 +69,15 @@ unforgiving heartland. The game's vast and atmospheric world will also provide t
 foundation for a brand new online multiplayer experience.`, rating: 1, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'}
 ] }
 
-
-
-
   window.addEventListener("DOMContentLoaded", function(event) {
     console.log('connected')
-
-
-    
+  
 //populate navbar
 function renderNavBar() {
     let navBar = document.getElementById('nav-tab')
     navBar.innerHTML = ''
-    for (let platform of userPlatforms) {
-      if (userPlatforms.indexOf(platform) === 0) {
+    for (let platform of usersPlatforms) {
+      if (usersPlatforms.indexOf(platform) === 0) {
         navBar.innerHTML +=`<a class="nav-item nav-link btn active" id="${platform.name}-tab" data-toggle="tab" role="tab"
                     aria-controls="nav-home" aria-selected="true">${platform.name}</a>`
       } else {
@@ -86,10 +85,45 @@ function renderNavBar() {
         `<a class="nav-item btn nav-link" id="${platform.name}-tab" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" aria-selected="false">${platform.name}</a>`
       }
-    } console.log('now for the platform thing')
+    };
     navBar.innerHTML +=
         `<a class="nav-item btn nav-link" id="new-platform-tab" data-toggle="tab"  role="tab"
-        aria-controls="nav-profile" aria-selected="false">Add a platform</a>`
+        aria-controls="nav-profile" data-toggle="modal" data-target="#add-platform-modal" aria-selected="false">Add a platform</a>`
+    const add_modal = create.addPlatformModal();
+    navBar.innerHTML += add_modal;
+
+    const addPlatform = document.querySelector('#new-platform-tab');
+    addPlatform.addEventListener('click', function(){
+      $('#add-platform-modal').modal()
+    })
+
+    const modalOptions = document.querySelector('#platform-options');
+    let userOptions = allPlatforms.map(function(platform){
+      let result = usersPlatforms.some(userPlatform => {
+        return platform.igdb_id === userPlatform.igdb_id
+      })
+      if (result) {
+        return create.addplatformOwned(platform.igdb_id, platform.name)
+      } else {return create.addplatformAvailable(platform.igdb_id, platform.name)}
+    })
+    let userOptionsFinal = userOptions.join('\n');
+    modalOptions.innerHTML += userOptionsFinal;
+
+    const addPlatformButton = document.querySelector('#add-platform-to-user')
+    addPlatformButton.addEventListener('submit', function(event){
+      event.preventDefault();
+      let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
+      let selectedStr = selectedOption[0].id;
+      console.log(typeof parseInt(selectedStr));
+      axios.post(userAPI + `/${userId}/platforms`, {
+        user_id: userId,
+        platform_id: parseInt(selectedStr),
+      })
+      .then(function(){
+        console.log('Platform Added');
+        init();
+      })
+    })
 }
 
 renderNavBar()
