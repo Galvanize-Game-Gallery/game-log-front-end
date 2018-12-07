@@ -89,8 +89,6 @@ function init() {
         platformId: parseInt(selectedStr),
       })
         .then(function () {
-          console.log('Platform Added');
-          // renderAccordion(selectedStr);
           window.location.reload()
           $('#add-platform-modal').modal('toggle'); //or  $('#IDModal').modal('hide');
           return false;
