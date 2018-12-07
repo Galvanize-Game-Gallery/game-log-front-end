@@ -23,6 +23,7 @@ function init() {
   const userId = str.substring(str.indexOf('=')+1);
   const {request} = require('../utils');
 
+  
   function getPlatforms() {
     return request(`/game/userplatforms/${userId}`,'get').then(function(result){
       return result.data;
@@ -30,18 +31,18 @@ function init() {
   };
 
   getPlatforms().then(function(result){
-    console.log(result);
     renderNavBar(result);
+    if(result) {
+      renderAccordion(result[0].igdb_id)
+    }
   })
 
-//dummy data
-  
+//dummy data we didn't have time to query properly
   let allPlatforms = [{id: 49, name: 'Xbox One'}, {id: 48, name: "Playstation 4"}, {id: 130, name: "Nintendo Switch"}, {id: 6, name: "PC"}];
 
 
 //populate navbar
 function renderNavBar(userPlatforms) {
-  console.log(userPlatforms);
     let navBar = document.getElementById('nav-tab')
     navBar.innerHTML = ''
     for (let platform of userPlatforms) {
@@ -78,6 +79,7 @@ function renderNavBar(userPlatforms) {
     modalOptions.innerHTML += userOptionsFinal;
 
     const addPlatformButton = document.querySelector('#add-platform-to-user')
+
     addPlatformButton.addEventListener('submit', function(event){
       event.preventDefault();
       let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
@@ -93,17 +95,17 @@ function renderNavBar(userPlatforms) {
     })
 }
 
-
 //populate accordion
 function renderAccordion(curPlatform) {
-  let accordion = document.getElementById('accordion')
-  accordion.innerHTML = ''
-  for (game of curPlatform.games) {
-      let i = curPlatform.games.indexOf(game) + 1
+  console.log(curPlatform)
+  return request(`/game/usergames/${userId}/${curPlatform}`)
+  .then(result => {
+    let accordion = document.getElementById('accordion')
+     accordion.innerHTML = ''
+     for(let i = 0; i < result.data.length; i++){
+      let game = result.data[i]
       let show = ''
-      if (i == 1) {
-        show = 'show'//shows the first game by default
-      }
+      if(i === 0) {show = 'show'} //shows first game by default
       accordion.innerHTML +=
       `<div class="card">
       <div class="card-header" id="heading${i}">
@@ -131,52 +133,33 @@ function renderAccordion(curPlatform) {
         </div>
       </div>
       </div>`
-  }    
+     }
+    return
+  })
 }
 
-// renderAccordion(xbox)
+document.addEventListener('click', (e) => {
+  if (e.target.matches('.nav-item')) {
+    if (e.target.innerHTML !== 'Add a platform') {
+      renderAccordion(e.target.id)
+    } 
+  }
+})
 
 
 
 
 
-    // document.addEventListener('click', (e) => {
-    //   if (e.target.matches('.nav-item')) {
-    //     if (e.target.innerHTML === 'Xbox One') {
-    //       renderAccordion(xbox)
-    //     } else if (e.target.innerHTML === "Playstation 4") {
-    //         renderAccordion(ps4)
-    //     } else if (e.target.innerHTML === "Nintendo Switch") {
-    //       renderAccordion(nintendoSwitch)
-    //     } else if (e.target.innerHTML === 'PC') {
-    //       renderAccordion(pc)
-    //     }
-      
-    //   }
-    // })
-
-
-
-
-
-
-
-
-
-  //dashboard query selectors
-  let dashSwitch = document.querySelector('#dashPC')
-  let dashPC = document.querySelector('#dashSwitch')
-  let dashPlay = document.querySelector('#dashPlay')
-  let dashAdd = document.querySelector('#dashXbox')
-  let dashXbox = document.querySelector('#dashAdd')
+  // //dashboard query selectors
+  // let dashSwitch = document.querySelector('#dashPC')
+  // let dashPC = document.querySelector('#dashSwitch')
+  // let dashPlay = document.querySelector('#dashPlay')
+  // let dashAdd = document.querySelector('#dashXbox')
+  // let dashXbox = document.querySelector('#dashAdd')
   let headingUser = document.querySelector('h4')
   let headingName = document.querySelector('h5')
   let userName = 'dynamically set Name'
   let fullName = 'pull full name'
-
-  
-
-  
 
 
   //place link variables for page here
@@ -192,8 +175,6 @@ function renderAccordion(curPlatform) {
   let navLibrary = document.querySelector('#navlibrary')
   let userLibraryLink = 'library.html'
   dynamicLink(userLibraryLink, navLibrary)
-  
-  
   
   
   headingUser.innerHTML = userName
