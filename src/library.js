@@ -3,7 +3,6 @@ function init() {
   let userID = function getUserID() {
     let linkID = window.location.search
     let userID = linkID.slice(4)
-    console.log('user id', userID)
     return userID
   }
   userID()
@@ -71,7 +70,6 @@ function init() {
           platformList.push(create.platformTagSwitch(system))
         }
       }
-      // console.log(platformList);
       const platformsFormatted = platformList.join('\n');
       document.querySelector(`#platform-area[data-id="${game.igdb_id}"`).innerHTML = platformsFormatted;
     }
