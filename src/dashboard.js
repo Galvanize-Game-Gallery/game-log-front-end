@@ -20,100 +20,127 @@ function authorize(path, method = 'get', body = null) {
 function init() {
   const create = require('./templates');
   const str = window.location.search;
-  const userId = str.substring(str.indexOf('=')+1);
-  const {request} = require('../utils');
+  const userId = str.substring(str.indexOf('=') + 1);
+  const { request } = require('../utils');
 
-  
+
   function getPlatforms() {
-    return request(`/game/userplatforms/${userId}`,'get').then(function(result){
+    return request(`/game/userplatforms/${userId}`, 'get').then(function (result) {
       return result.data;
     });
   };
 
-  getPlatforms().then(function(result){
+  getPlatforms().then(function (result) {
     renderNavBar(result);
-    if(result) {
+    if (result) {
       renderAccordion(result[0].igdb_id)
     }
   })
 
-//dummy data we didn't have time to query properly
-  let allPlatforms = [{id: 49, name: 'Xbox One'}, {id: 48, name: "Playstation 4"}, {id: 130, name: "Nintendo Switch"}, {id: 6, name: "PC"}];
+  //dummy data we didn't have time to query properly
+  let allPlatforms = [{ id: 49, name: 'Xbox One' }, { id: 48, name: "Playstation 4" }, { id: 130, name: "Nintendo Switch" }, { id: 6, name: "PC" }];
 
 
-//populate navbar
-function renderNavBar(userPlatforms) {
+  //populate navbar
+  function renderNavBar(userPlatforms) {
     let navBar = document.getElementById('nav-tab')
     navBar.innerHTML = ''
     for (let platform of userPlatforms) {
       if (userPlatforms.indexOf(platform) === 0) {
-        navBar.innerHTML +=`<a class="nav-item nav-link btn active bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab" role="tab"
+        navBar.innerHTML += `<a class="nav-item nav-link btn active bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab" role="tab"
                     aria-controls="nav-home" aria-selected="true">${platform.name}</a>`
       } else {
         navBar.innerHTML +=
-        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab"  role="tab"
+          `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" aria-selected="false">${platform.name}</a>`
       }
     };
     navBar.innerHTML +=
-        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="new-platform-tab" data-toggle="tab"  role="tab"
+      `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="new-platform-tab" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" data-toggle="modal" data-target="#add-platform-modal" aria-selected="false">Add a platform</a>`
     const add_modal = create.addPlatformModal();
     navBar.innerHTML += add_modal;
 
     const addPlatform = document.querySelector('#new-platform-tab');
-    addPlatform.addEventListener('click', function(){
+    addPlatform.addEventListener('click', function () {
       $('#add-platform-modal').modal()
     })
 
     const modalOptions = document.querySelector('#platform-options');
-    let userOptions = allPlatforms.map(function(platform){
+    let userOptions = allPlatforms.map(function (platform) {
       let result = userPlatforms.some(ele => {
         return platform.id === ele.igdb_id
       })
       if (result) {
         return create.addplatformOwned(platform.id, platform.name)
-      } else {return create.addplatformAvailable(platform.id, platform.name)}
+      } else { return create.addplatformAvailable(platform.id, platform.name) }
     })
     let userOptionsFinal = userOptions.join('\n');
     modalOptions.innerHTML += userOptionsFinal;
 
     const addPlatformButton = document.querySelector('#add-platform-to-user')
 
-    addPlatformButton.addEventListener('submit', function(event){
+    addPlatformButton.addEventListener('submit', function (event) {
       event.preventDefault();
       let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
       let selectedStr = selectedOption[0].id;
-      request(`/user/${userId}/platforms`,'post',{
+      request(`/user/${userId}/platforms`, 'post', {
         userId: userId,
         platformId: parseInt(selectedStr),
-      }) 
-      .then(function(){
-        console.log('Platform Added');
-        renderAccordion(selectedStr);
       })
+        .then(function () {
+          console.log('Platform Added');
+          renderAccordion(selectedStr);
+        })
     })
-}
+  }
 
-//populate accordion
-function renderAccordion(curPlatform) {
-  console.log(curPlatform)
-  return request(`/game/usergames/${userId}/${curPlatform}`)
-  .then(result => {
-    let accordion = document.getElementById('accordion')
-     accordion.innerHTML = ''
-     for(let i = 0; i < result.data.length; i++){
-      let game = result.data[i]
-      let show = ''
-      if(i === 0) {show = 'show'} //shows first game by default
-      accordion.innerHTML +=
-      `<div class="card">
+  function populateGames(platformId) {
+    return request(`/game/library/${userId}/${platformId}`)
+      .then(function (result) {
+        let dd = document.getElementById('addGameMenu')
+        dd.innerHTML = ''
+        if (result.data.length > 0) {
+          for(let i = 0; i<result.data.length; i++){
+            dd.innerHTML +=` <a class="dropdown-item addGamePlat" id=${result.data[i].igdb_id}>${result.data[i].title}</a>`
+          }
+
+          document.addEventListener('click', (e) => {
+            if (e.target.matches('.addGamePlat')) { 
+                return request(`/user/${userId}/platforms/${platformId}/games`, 'post', {"game_id": e.target.id})
+                .then(result => {
+                  location.reload()
+                })
+            }
+          })
+
+        }
+        else {
+          dd.innerHTML += `<a class="dropdown-item" id='None'>You Have Everything For That Platform!</a>`
+        }
+      });
+  }
+
+  //populate accordion
+  function renderAccordion(curPlatform) {
+    return request(`/game/usergames/${userId}/${curPlatform}`)
+      .then(result => {
+        if (result.data.length > 0) {
+          for (let i = 0; i < result.data.length; i++) {
+            let game = result.data[i]
+            let show = ''
+            if (i === 0) { show = 'show' } //shows first game by default
+            //umm this is working but where do I tell it where accordion is?
+            accordion.innerHTML +=
+              `<div class="card">
       <div class="card-header" id="heading${i}">
-        <h5 class="mb-0">
+        <h5 class="mb-0" id=${game.igdb_id}>
           <button class="btn btn-link" data-toggle="collapse" data-target="#collapse${i}" aria-expanded="true"
             aria-controls="collapse1">
             ${game.title}
           </button>
+          <button class="btn btn-danger delPlatGame">Remove My Game</button>
+          <button class="btn btn-success editPlatGame">Edit My Game</button>
         </h5>
       </div>
       <div id="collapse${i}" class="collapse ${show}" aria-labelledby="heading${i}" data-parent="#accordion">
@@ -127,40 +154,66 @@ function renderAccordion(curPlatform) {
                     <p>
                       <strong>Notes:</strong>${game.notes}
                     </p>
-                    <p><strong>My rating: </strong>${game.rating}/5</p>            
+                    <p><strong>My rating: </strong>${game.user_rating}/5</p>            
             </div>
           </div>
         </div>
       </div>
       </div>`
-     }
-    return
-  })
-}
 
-document.addEventListener('click', (e) => {
-  if (e.target.matches('.nav-item')) {
-    if (e.target.innerHTML !== 'Add a platform') {
-      renderAccordion(e.target.id)
-    } 
+            document.addEventListener('click', (e) => {
+              if (e.target.matches('.editPlatGame')) { 
+                  console.log('EDIT STUFF GOES HERE')
+              }
+              else if(e.target.matches('.delPlatGame')) {
+                let gameId = e.target.parentNode.id
+                  return request(`/user/${userId}/platforms/${curPlatform}/games/${gameId}`, 'delete')
+                  .then(()=> {
+                    location.reload()
+                  })
+              }
+            })
+          }
+        }
+        else {
+          accordion.innerHTML +=
+            `<div class="card">
+        <div class="card-header" id="heading">
+         <h5 class="mb-0">
+          You Do Not Appear To Have Any Games For This Platform
+         </h5>
+        </div>
+      </div>`
+        }
+        populateGames(curPlatform, userId)
+        return
+      })
   }
-})
 
+  document.addEventListener('click', (e) => {
+    if (e.target.matches('.nav-item')) {
+      if (e.target.innerHTML !== 'Add a platform') {
+        document.getElementById('accordion').innerHTML = ''
+        renderAccordion(e.target.id)
+      }
+    }
+  })
 
-
-
-
-  // //dashboard query selectors
-  // let dashSwitch = document.querySelector('#dashPC')
-  // let dashPC = document.querySelector('#dashSwitch')
-  // let dashPlay = document.querySelector('#dashPlay')
-  // let dashAdd = document.querySelector('#dashXbox')
-  // let dashXbox = document.querySelector('#dashAdd')
   let headingUser = document.querySelector('h4')
   let headingName = document.querySelector('h5')
-  let userName = 'dynamically set Name'
-  let fullName = 'pull full name'
 
+  function getUser() {
+    return request(`/user/${userId}`).then(function (result) {
+      return result.data;
+    });
+  };
+
+  getUser().then(function (result) {
+    if (result) {
+      headingUser.innerHTML = result.username
+      headingName.innerText = result.fname + ' ' + result.lname
+    }
+  })
 
   //place link variables for page here
   // dynamic link function
@@ -168,18 +221,14 @@ document.addEventListener('click', (e) => {
     let linkID = window.location.search
     let userID = linkID.slice(4)
     dynamicLink = link + linkID
-    nav.setAttribute('href', dynamicLink)  
+    nav.setAttribute('href', dynamicLink)
   }
-  
+
   // dynamic link invoke here. 
   let navLibrary = document.querySelector('#navlibrary')
   let userLibraryLink = 'library.html'
   dynamicLink(userLibraryLink, navLibrary)
-  
-  
-  headingUser.innerHTML = userName
-  headingName.innerText = fullName
-  
 }
+
 
 module.exports = { init }
