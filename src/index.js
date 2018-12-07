@@ -31,7 +31,7 @@ function init() {
       bearerToken = `Bearer ${token}`
     }
 
-    return axios(`http://localhost:3000${path}`, {
+    return axios(`https://lit-escarpment-87610.herokuapp.com${path}`, {
       method: method,
       headers: {
         'Content-Type': 'application/json',
@@ -124,7 +124,7 @@ function init() {
           return
         }
         console.log(username, fname, lname, password)
-        axios.post(`http://localhost:3000/user`, {
+        axios.post(`https://lit-escarpment-87610.herokuapp.com/user`, {
             "username": username,
             "password": password,
             "fname": fname,

@@ -1,11 +1,11 @@
-function request(path, method = 'get', body = null) {
+function authorize(path, method = 'get', body = null) {
   let bearerToken = ''
   const token = localStorage.getItem('token')
   if (token) {
     bearerToken = `Bearer ${token}`
   }
 
-  return axios(`http://localhost:3000${path}`, {
+  return axios(`https://lit-escarpment-87610.herokuapp.com${path}`, {
     method: method,
     headers: {
       'Content-Type': 'application/json',
@@ -21,100 +21,36 @@ function init() {
   const create = require('./templates');
   const str = window.location.search;
   const userId = str.substring(str.indexOf('=')+1);
-  const axios = require('axios');
   const {request} = require('../utils');
 
+  function getPlatforms() {
+    return request(`/game/userplatforms/${userId}`,'get').then(function(result){
+      return result.data;
+    });
+  };
 
-  request(`/user/${userId}/platforms`,'get').then(function(result){
+  getPlatforms().then(function(result){
     console.log(result);
+    renderNavBar(result);
   })
-  
+
 //dummy data
   
-  let userPlatforms = [{id: 49, name: 'Xbox One'}, {id: 50, name: "Playstation 4"}, {id: 52, name: "Nintendo Switch"}, {id: 51, name: "PC"}]
-
-  request('/auth/token')
-  .then(response => {
-    const id = response.data.id
-    return request(`/user/${id}/platforms`)
-  })
-  .then(function(response){
-    console.log(response.data)
-  })
+  let allPlatforms = [{id: 49, name: 'Xbox One'}, {id: 48, name: "Playstation 4"}, {id: 130, name: "Nintendo Switch"}, {id: 6, name: "PC"}];
 
 
-  let ps4 ={name: "Playstation 4", games: [{title: "Red Dead Redemption 2", notes: `there's a snake in my boot!`, desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 4, cover_url: '//images.igdb.com/igdb/image/upload/t_thumb/yfk9f2lbo0r7slytuhra.jpg'},
-  {title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 2, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'},
-  {title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 1, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'}
-] }
-
-
-  let xbox = {name: "Xbox One", games:  [{title: "Microsoft Cowboy Simulator 2007", notes: `someone poisoned the waterin hole!`, desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 4, cover_url: 'https://static1.funidelia.com/54007-f4_large/mans-cowboy-costume-with-inflatable-horse.jpg'},
-  {title: "Bill Laimbeer's Xbox Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 2, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'},
-  {title: "Earthbound, now for Xbox", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-  Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-  unforgiving heartland. The game's vast and atmospheric world will also provide the
-  foundation for a brand new online multiplayer experience.`, rating: 1, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'}
-   
-] }
-
-let nintendoSwitch ={name: "Nintendo Switch", games: [{title: "Mario", notes: `jump on top of guys + run into a mushroom = good`, desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 4, cover_url: 'https://i.kym-cdn.com/photos/images/original/000/596/519/7d2.png'},
-{title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 2, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'},
-{title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 1, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'}
-] }
-
-let pc ={name: "PC", games: [{title: "The Curse of Monkey Island", notes: `there's a snake in my boot!`, desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 4, cover_url: 'https://upload.wikimedia.org/wikipedia/en/thumb/2/26/The_Curse_of_Monkey_Island_artwork.jpg/220px-The_Curse_of_Monkey_Island_artwork.jpg'},
-{title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 2, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'},
-{title: "Bill Laimbeer's Combat Basketball", notes: 'the b button does everything.', desc: `Developed by the creators of Grand Theft Auto V and
-Red Dead Redemption, Red Dead Redemption 2 is an epic tale of life in America’s
-unforgiving heartland. The game's vast and atmospheric world will also provide the
-foundation for a brand new online multiplayer experience.`, rating: 1, cover_url: 'https://vignette.wikia.nocookie.net/gamegrumps/images/f/fb/Bill_LaimbeersCombatBasketballCover.jpg/revision/latest?cb=20131129180958'}
-] }
-
-  window.addEventListener("DOMContentLoaded", function(event) {
-    console.log('connected')
-  
 //populate navbar
-function renderNavBar() {
+function renderNavBar(userPlatforms) {
+  console.log(userPlatforms);
     let navBar = document.getElementById('nav-tab')
     navBar.innerHTML = ''
-    for (let platform of usersPlatforms) {
-      if (usersPlatforms.indexOf(platform) === 0) {
-        navBar.innerHTML +=`<a class="nav-item nav-link btn active bg-secondary text-light nav-tab" id="${platform.igdb_id}-tab" data-toggle="tab" role="tab"
+    for (let platform of userPlatforms) {
+      if (userPlatforms.indexOf(platform) === 0) {
+        navBar.innerHTML +=`<a class="nav-item nav-link btn active bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab" role="tab"
                     aria-controls="nav-home" aria-selected="true">${platform.name}</a>`
       } else {
         navBar.innerHTML +=
-        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="${platform.igdb_id}-tab" data-toggle="tab"  role="tab"
+        `<a class="nav-item btn nav-link bg-secondary text-light nav-tab" id="${platform.igdb_id}" data-toggle="tab"  role="tab"
         aria-controls="nav-profile" aria-selected="false">${platform.name}</a>`
       }
     };
@@ -131,12 +67,12 @@ function renderNavBar() {
 
     const modalOptions = document.querySelector('#platform-options');
     let userOptions = allPlatforms.map(function(platform){
-      let result = usersPlatforms.some(userPlatform => {
-        return platform.igdb_id === userPlatform.igdb_id
+      let result = userPlatforms.some(ele => {
+        return platform.id === ele.igdb_id
       })
       if (result) {
-        return create.addplatformOwned(platform.igdb_id, platform.name)
-      } else {return create.addplatformAvailable(platform.igdb_id, platform.name)}
+        return create.addplatformOwned(platform.id, platform.name)
+      } else {return create.addplatformAvailable(platform.id, platform.name)}
     })
     let userOptionsFinal = userOptions.join('\n');
     modalOptions.innerHTML += userOptionsFinal;
@@ -147,8 +83,8 @@ function renderNavBar() {
       let selectedOption = Array.from(document.querySelectorAll(`option:checked`));
       let selectedStr = selectedOption[0].id;
       request(`/user/${userId}/platforms`,'post',{
-        user_id: userId,
-        platform_id: parseInt(selectedStr),
+        userId: userId,
+        platformId: parseInt(selectedStr),
       }) 
       .then(function(){
         console.log('Platform Added');
@@ -156,9 +92,6 @@ function renderNavBar() {
       })
     })
 }
-
-renderNavBar()
-
 
 
 //populate accordion
@@ -201,26 +134,26 @@ function renderAccordion(curPlatform) {
   }    
 }
 
-renderAccordion(xbox)
+// renderAccordion(xbox)
 
 
 
 
 
-    document.addEventListener('click', (e) => {
-      if (e.target.matches('.nav-item')) {
-        if (e.target.innerHTML === 'Xbox One') {
-          renderAccordion(xbox)
-        } else if (e.target.innerHTML === "Playstation 4") {
-            renderAccordion(ps4)
-        } else if (e.target.innerHTML === "Nintendo Switch") {
-          renderAccordion(nintendoSwitch)
-        } else if (e.target.innerHTML === 'PC') {
-          renderAccordion(pc)
-        }
+    // document.addEventListener('click', (e) => {
+    //   if (e.target.matches('.nav-item')) {
+    //     if (e.target.innerHTML === 'Xbox One') {
+    //       renderAccordion(xbox)
+    //     } else if (e.target.innerHTML === "Playstation 4") {
+    //         renderAccordion(ps4)
+    //     } else if (e.target.innerHTML === "Nintendo Switch") {
+    //       renderAccordion(nintendoSwitch)
+    //     } else if (e.target.innerHTML === 'PC') {
+    //       renderAccordion(pc)
+    //     }
       
-      }
-    })
+    //   }
+    // })
 
 
 
@@ -266,15 +199,6 @@ renderAccordion(xbox)
   headingUser.innerHTML = userName
   headingName.innerText = fullName
   
-  
-  
-
-
-
-  })
-
-
-
 }
 
 module.exports = { init }
