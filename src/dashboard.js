@@ -90,7 +90,10 @@ function init() {
       })
         .then(function () {
           console.log('Platform Added');
-          renderAccordion(selectedStr);
+          // renderAccordion(selectedStr);
+          window.location.reload()
+          $('#add-platform-modal').modal('toggle'); //or  $('#IDModal').modal('hide');
+          return false;
         })
     })
   }

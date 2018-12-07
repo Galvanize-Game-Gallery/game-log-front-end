@@ -52,7 +52,6 @@ function init() {
       alertBar.innerHTML = ``
       let username = document.getElementById('username').value
       let password = document.getElementById('password').value
-      console.log(username, password)
       if (!username || !password) {
         let alertBar = document.getElementById('alert-bar')
         alertBar.innerHTML = ` 
@@ -71,7 +70,6 @@ function init() {
 
         }).then(function (response) {
           userID = response.data.id
-          console.log('login user ID', userID)
           window.location = `dashboard.html?id=${userID}`
 
 
@@ -123,7 +121,6 @@ function init() {
                         </div>`
           return
         }
-        console.log(username, fname, lname, password)
         axios.post(`https://lit-escarpment-87610.herokuapp.com/user`, {
             "username": username,
             "password": password,
@@ -131,9 +128,7 @@ function init() {
             "lname": lname
           })
           .then(response => {
-            console.log(response)
             if (response.data.error) {
-              console.log(response.data.error.message)
               let alertBar = document.getElementById('alert-bar')
               alertBar.innerHTML = ` 
                                 <div class="alert alert-danger" role="alert">
@@ -142,8 +137,6 @@ function init() {
 
             }
             userID = response.data.data.id
-            console.log('login user ID', userID)
-
             window.location = `dashboard.html?id=${userID}`
             //can add custom dashboard welcome message here for new user if we want  
           })
