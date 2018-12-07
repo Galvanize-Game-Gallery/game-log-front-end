@@ -161,6 +161,14 @@ function init() {
       </div>
       </div>`
 
+  }    
+}
+
+renderAccordion(xbox)
+
+
+
+
             document.addEventListener('click', (e) => {
               if (e.target.matches('.editPlatGame')) { 
                   console.log('EDIT STUFF GOES HERE')
