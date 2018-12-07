@@ -160,13 +160,41 @@ function init() {
                     <p><strong>My rating: </strong>${game.user_rating}/5</p>            
             </div>
           </div>
+            <div class="row hide-confirm update-form" data-id="${game.igdb_id}">
+              <form class="update-form" data-id="${game.igdb_id}">
+                <div class="form-row justify-content-center">
+                <div class="col-3">
+                  <div class="menuBar">
+                    <label class="menuBar" for="update-rating">Your Rating</label>
+                    </div>
+                      <input class="update-form-fields" type="text" data-id="${game.igdb_id}"  id="update-rating" value="${game.user_rating}">
+                    </div>
+                      <div class="col-6 item-columns">
+                      <div class="menuBar">
+                    <label class="menuBar" for="update-notes">Your Personal Notes</label>
+                  </div>
+                    <input class="update-form-fields" type="text" data-id="${game.igdb_id}"  id="update-title" value="${game.notes}">
+                </div>
+                  <div class="col-3 item-columns">
+                    <button id = "stop-post" data-id="${game.igdb_id}" type="button" class="close-button btn-sm btn-outline-dark">X</button>
+                    <input type="submit" class=" btn btn-primary" id="submit-update" data-id="${game.igdb_id}" value="Update My Game">
+                  </div>
+                </div>
+                </div>
+              </form>
+            </div>
         </div>
       </div>
-      </div>`
+      </div>
+      `
+      const updateGameField = document.querySelector(`.update-form[data-id="${game.igdb_id}"]`);
+      const closeUpdateForm = document.querySelector(`#stop-post[data-id="${game.igdb_id}"]`)
 
             document.addEventListener('click', (e) => {
               if (e.target.matches('.editPlatGame')) { 
-                  console.log('EDIT STUFF GOES HERE')
+                if (updateGameField.classList.contains('hide-confirm')) {
+                  updateGameField.classList.remove('hide-confirm')
+                } else {updateGameField.classList.add('hide-confirm')}
               }
               else if(e.target.matches('.delPlatGame')) {
                 let gameId = e.target.parentNode.id
