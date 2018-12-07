@@ -17,7 +17,7 @@ function init() {
         <input type="text" name="lname-create" id="lname-create" class="form-control" placeholder="Last" required><br>
 
         <label for="password-create">Password</label>
-        <input type="password" name="password-create" id="password-create" class="form-control" placeholder="Password" required> <br>
+        <input type="text" name="password-create" id="password-create" class="form-control" placeholder="Password" required> <br>
         <input type='submit' id="submit-create" class="btn btn-primary" value='Start my log!'>
         <button class='btn btn-primary' id='back-to-sign-in'>Back to sign-in</button>
 
