@@ -72,7 +72,7 @@ function init() {
           userID = response.data.id
           window.location = `dashboard.html?id=${userID}`
 
-
+          // no commented out code
           // if (response.data.error) {
           //     let alertBar = document.getElementById('alert-bar')  
           //     alertBar.innerHTML = ` 

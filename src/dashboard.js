@@ -102,7 +102,7 @@ function init() {
         let dd = document.getElementById('addGameMenu')
         dd.innerHTML = ''
         if (result.data.length > 0) {
-          for(let i = 0; i<result.data.length; i++){
+          for(let i = 0; i<result.data.length; i++){ // use map to generate the HTML string, then attach to DOM
             dd.innerHTML +=` <a class="dropdown-item addGamePlat" id=${result.data[i].igdb_id}>${result.data[i].title}</a>`
           }
 

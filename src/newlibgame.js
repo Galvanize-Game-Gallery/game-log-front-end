@@ -13,12 +13,12 @@ function addEventListeners(){
         let alert =  document.querySelector('.alert.search')
         if(!alert.classList.contains('hide-confirm')) alert.classList.add('hide-confirm')
         let searchBox = document.getElementById('searchText')
-            if(!searchBox.value){
-                alert.classList.remove('hide-confirm')
-            } 
-            else {
-                searchIGDB(searchBox.value)
-            }
+        if(!searchBox.value){
+            alert.classList.remove('hide-confirm')
+        } 
+        else {
+            searchIGDB(searchBox.value)
+        }
     })
 }
 
@@ -38,17 +38,21 @@ function render(searchArray){
 
     let table = document.createElement('table')
     table.className='container'
+
     let hrow = document.createElement('tr')
     hrow.className='row tab border'
-        let hrowCA = document.createElement('th')
-        hrowCA.className='col-md-3 col-sm-3'
-        hrowCA.innerText = 'Cover Art'
+    
+    let hrowCA = document.createElement('th')
+    hrowCA.className='col-md-3 col-sm-3'
+    hrowCA.innerText = 'Cover Art'
+    
     let hrowtitle = document.createElement('th')
-        hrowtitle.className='col-md-6 col-sm-6'
-        hrowtitle.innerText = 'Game Title'
+    hrowtitle.className='col-md-6 col-sm-6'
+    hrowtitle.innerText = 'Game Title'
+    
     let addToLib = document.createElement('th')
-        addToLib.className='col-md-2 col-sm-2'
-        addToLib.innerText = 'Add Game'
+    addToLib.className='col-md-2 col-sm-2'
+    addToLib.innerText = 'Add Game'
     hrow.appendChild(hrowCA)
     hrow.appendChild(hrowtitle)
     hrow.appendChild(addToLib)
